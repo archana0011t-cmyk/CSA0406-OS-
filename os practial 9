@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+#define SIZE 5
+
+int buffer[SIZE];
+int front = -1, rear = -1;
+
+// Insert an item into the buffer
+void produce(int item) {
+    if (rear == SIZE - 1) {
+        printf("Buffer is Full!\n");
+    } else {
+        if (front == -1)
+            front = 0;
+        buffer[++rear] = item;
+        printf("Produced: %d\n", item);
+    }
+}
+
+// Remove an item from the buffer
+void consume() {
+    if (front == -1 || front > rear) {
+        printf("Buffer is Empty!\n");
+    } else {
+        printf("Consumed: %d\n", buffer[front]);
+        front++;
+    }
+}
+
+// Display the buffer
+void display() {
+    if (front == -1 || front > rear) {
+        printf("Buffer is Empty!\n");
+    } else {
+        printf("Buffer: ");
+        for (int i = front; i <= rear; i++) {
+            printf("%d ", buffer[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, item;
+
+    while (1) {
+        printf("\n--- Bounded Buffer ---\n");
+        printf("1. Produce\n");
+        printf("2. Consume\n");
+        printf("3. Display Buffer\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter item: ");
+                scanf("%d", &item);
+                produce(item);
+                break;
+
+            case 2:
+                consume();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                return 0;
+
+            default:
+                printf("Invalid Choice!\n");
+        }
+    }
+
+    return 0;
+}
