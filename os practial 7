@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int memory[10];
+    int n, i;
+
+    printf("Enter the number of memory blocks: ");
+    scanf("%d", &n);
+
+    // Allocate memory blocks
+    printf("Enter the size of each memory block:\n");
+    for(i = 0; i < n; i++) {
+        printf("Block %d: ", i + 1);
+        scanf("%d", &memory[i]);
+    }
+
+    // Display allocated memory blocks
+    printf("\nAllocated Memory Blocks:\n");
+    for(i = 0; i < n; i++) {
+        printf("Block %d = %d KB\n", i + 1, memory[i]);
+    }
+
+    return 0;
+}
