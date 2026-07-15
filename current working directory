@@ -1,0 +1,9 @@
+#include <stdio.h>
+#include <unistd.h>
+int main()
+{
+    char path[200];
+    getcwd(path, sizeof(path));
+    printf("Current Working Directory:\n%s\n", path);
+    return 0;
+}
