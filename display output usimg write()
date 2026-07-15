@@ -1,0 +1,8 @@
+#include <unistd.h>
+#include <string.h>
+int main()
+{
+    char msg[] = "Welcome to Operating System Lab\n";
+    write(1, msg, strlen(msg));   // 1 = Standard Output
+    return 0;
+}
