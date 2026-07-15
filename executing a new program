@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+int main()
+{
+    pid_t pid = fork();
+
+    if (pid == 0)
+    {
+        printf("Executing ls -l command...\n");
+        execl("/bin/ls", "ls", "-l", NULL);
+
+        // Executes only if execl() fails
+        printf("Execution Failed!\n");
+    }
+    else if (pid > 0)
+    {
+        wait(NULL);
+        printf("Parent Process Finished.\n");
+    }
+    else
+    {
+        printf("Fork Failed!\n");
+    }
+    return 0;
+}
