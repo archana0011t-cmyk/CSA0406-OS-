@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <unistd.h>
+int main()
+{
+    char str[100];
+    int n;
+    printf("Enter a string: ");
+    n = read(0, str, sizeof(str)-1);   // 0 = Keyboard (stdin)
+    str[n] = '\0';
+    printf("You entered: %s", str);
+    return 0;
+}
