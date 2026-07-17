@@ -1,0 +1,57 @@
+CO1-ASSESSMENT TOOL-1 
+CSA0406-OPERATING SYSTEM
+NAME:ARCHANA.T
+REG NO.:192521295
+SLOT:A
+1.(A) Multi-User Operating System(Linux) it allows multiple user to run programs at the same time
+(B) Process Scheduling,Memory management
+(C)Pseudo code
+Start
+fork()
+If Child
+    Print Child PID
+Else
+    Print Parent PID
+End
+Stop
+2.(A) create(),open(),write(),read(),close()
+(B) write()- writes data into a file
+    close()-Closes the opened file
+(C) Pseudo code
+Start
+Create/Open file
+Write student name
+Close file
+Stop
+3.(A) open(),read(),write(),close()
+(B) read()-Reads data from the file
+    write()- writes data into another file
+(C)Pseudo code
+Start
+Open source file
+Open destination file
+Read data
+Write data
+Close both files
+Stop
+4.(A) fork()-Creates a child process
+      exec()-Executes a new program
+(B) wait() makes the parent process wait until the child finishes
+(C)Pseudo code
+Start
+fork()
+If Child
+    exec(new program)
+Else
+    wait()
+End
+Stop
+5.(A) File managemnet helps store,organize,retrieve,and protect files
+(B) open()-Opens a file
+    close()-Closes the file after use
+(C)Pseudo code 
+Start
+Open file
+Read contents
+Close file
+Stop
