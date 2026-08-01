@@ -1,0 +1,90 @@
+CO2-ASSESSMENT TOOL-3
+NAME:ARCHANA.T
+REG NO:192521295
+COURSE CODE:CSA0406
+COURSE:OPERATING SYSTEM 
+1) Deadlock Debugging
+The deadlock occurs because:
+P1 locks R1 and waits for R2.
+P2 locks R2 and waits for R1.
+Each process holds one resource while waiting for the other, creating a circular wait.
+Since neither process releases its first lock, both remain blocked forever.
+This satisfies the four deadlock conditions:
+Mutual Exclusion
+Hold and Wait
+No Preemption
+Circular Wait
+Optimization to Eliminate Deadlock
+Use a consistent resource ordering:
+Both processes should always lock R1 first and then R2.
+This removes the circular wait condition without changing the program's logic.
+Alternatively, use try-lock with timeout to release held resources and retry if the second lock is unavailable
+2) CPU Utilization Problem
+Cause of Low CPU Utilization
+Although processes are ready, they frequently transition:
+Ready → Waiting → Ready → Waiting
+This indicates that processes are I/O-bound.
+  They execute briefly and immediately request I/O.
+  The CPU becomes idle while waiting for I/O completion.
+  Frequent context switching also wastes CPU cycles.
+System-Level Optimization
+Increase multiprogramming level
+Run more processes simultaneously so another process uses the CPU while one waits for I/O.
+Improve I/O scheduling
+Use asynchronous I/O, buffering, or caching to reduce waiting time.
+Use a scheduler optimized for I/O-bound processes
+Quickly schedule another ready process whenever one blocks.
+These optimizations increase CPU utilization and improve overall system throughput.
+3) Memory Bottleneck Debugging
+Memory Issue
+Memory usage:
+Code = 5 MB
+Heap = 150 MB
+Stack = 1 MB × 25 threads = 25 MB
+Total memory ≈ 180 MB
+Even though physical RAM is 2 GB, the program experiences frequent page faults, indicating poor memory access patterns.
+Possible reasons:
+Large heap causes random memory accesses.
+Many threads compete for memory, reducing cache efficiency.
+Frequent page swapping increases page faults and slows execution.
+Optimizations
+Reduce memory usage
+Optimize heap allocations.
+Reuse memory using object pools.
+Reduce unnecessary data structures.
+Reduce the number of threads
+Use a thread pool instead of creating many threads.
+Lower memory consumption and improve cache locality.
+These optimizations reduce page faults and improve execution speed.
+4)Starvation Debugging
+Root Cause
+Process P5 is in Q3 (Batch Queue), which has the lowest priority.
+The scheduler always executes:
+Q1 (Interactive) first
+Then Q2 (System)
+Finally Q3 (Batch)
+If Q1 and Q2 continuously receive new processes, Q3 never gets CPU time, causing starvation.
+Optimization for Fairness
+Priority Aging
+Gradually increase the priority of waiting processes.
+Eventually, P5 moves to a higher-priority queue and gets CPU time.
+Allocate CPU time to lower queues
+Reserve a fixed percentage of CPU time for Q3.
+Prevents indefinite postponement.
+These methods eliminate starvation while maintaining priority scheduling.
+5)Context-Switch Overhead Debugging
+Reason for High Context Switching
+The server performs 20,000 context switches per second because:
+Time quantum is only 1 ms.
+Average CPU burst is 2 ms, so most threads are preempted before completing.
+Very frequent I/O operations cause threads to block often.
+Every preemption and I/O event triggers another context switch, increasing overhead.
+Optimizations
+Increase the Time Quantum
+Increase the quantum from 1 ms to 4–5 ms.
+Threads complete more work before being preempted, reducing context switches.
+Reduce I/O Waiting
+Use asynchronous or buffered I/O.
+Batch I/O requests where possible.
+Fewer blocking operations result in fewer context switches.
+These optimizations reduce scheduling overhead, improve CPU efficiency, and increase system performance.
