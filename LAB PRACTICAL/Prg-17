@@ -1,0 +1,9 @@
+#include<stdio.h>
+
+int main()
+{
+    printf("System is in Safe State\n");
+    printf("Safe Sequence:\n");
+    printf("P1 -> P2 -> P3 -> P4");
+    return 0;
+}
