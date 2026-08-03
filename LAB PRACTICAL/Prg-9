@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+int main()
+{
+    char message[50];
+
+    printf("Enter a message: ");
+    scanf("%s",message);
+
+    printf("Shared Memory contains: %s",message);
+
+    return 0;
+}
