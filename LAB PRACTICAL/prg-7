@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main()
+{
+    int n,i,j,temp;
+
+    printf("Enter number of processes: ");
+    scanf("%d",&n);
+
+    int bt[n];
+
+    for(i=0;i<n;i++)
+    {
+        printf("Enter Burst Time of P%d: ",i+1);
+        scanf("%d",&bt[i]);
+    }
+
+    for(i=0;i<n-1;i++)
+    {
+        for(j=i+1;j<n;j++)
+        {
+            if(bt[i]>bt[j])
+            {
+                temp=bt[i];
+                bt[i]=bt[j];
+                bt[j]=temp;
+            }
+        }
+    }
+
+    printf("\nBurst Times after SJF:\n");
+
+    for(i=0;i<n;i++)
+        printf("%d ",bt[i]);
+
+    return 0;
+}
