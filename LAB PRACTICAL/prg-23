@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main()
+{
+    int block[20], process[20];
+    int b,p,i,j;
+
+    printf("Enter number of memory blocks: ");
+    scanf("%d",&b);
+
+    printf("Enter block sizes:\n");
+    for(i=0;i<b;i++)
+        scanf("%d",&block[i]);
+
+    printf("Enter number of processes: ");
+    scanf("%d",&p);
+
+    printf("Enter process sizes:\n");
+    for(i=0;i<p;i++)
+        scanf("%d",&process[i]);
+
+    printf("\nProcess\tSize\tBlock\n");
+
+    for(i=0;i<p;i++)
+    {
+        for(j=0;j<b;j++)
+        {
+            if(block[j]>=process[i])
+            {
+                printf("P%d\t%d\t%d\n",i+1,process[i],j+1);
+                block[j]-=process[i];
+                break;
+            }
+        }
+
+        if(j==b)
+            printf("P%d\t%d\tNot Allocated\n",i+1,process[i]);
+    }
+
+    return 0;
+}
