@@ -1,0 +1,86 @@
+#include <stdio.h>
+
+int main()
+{
+    int block[20], temp[20], process[20];
+    int b, p, i, j, choice, index;
+
+    printf("Enter number of memory blocks: ");
+    scanf("%d", &b);
+
+    printf("Enter block sizes:\n");
+    for(i = 0; i < b; i++)
+        scanf("%d", &block[i]);
+
+    printf("Enter number of processes: ");
+    scanf("%d", &p);
+
+    printf("Enter process sizes:\n");
+    for(i = 0; i < p; i++)
+        scanf("%d", &process[i]);
+
+    // Copy original block sizes
+    for(i = 0; i < b; i++)
+        temp[i] = block[i];
+
+    printf("\nMemory Allocation Strategies");
+    printf("\n1. First Fit");
+    printf("\n2. Best Fit");
+    printf("\n3. Worst Fit");
+
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
+
+    printf("\nProcess\tSize\tBlock\n");
+
+    for(i = 0; i < p; i++)
+    {
+        index = -1;
+
+        if(choice == 1) // First Fit
+        {
+            for(j = 0; j < b; j++)
+            {
+                if(temp[j] >= process[i])
+                {
+                    index = j;
+                    break;
+                }
+            }
+        }
+        else if(choice == 2) // Best Fit
+        {
+            for(j = 0; j < b; j++)
+            {
+                if(temp[j] >= process[i])
+                {
+                    if(index == -1 || temp[j] < temp[index])
+                        index = j;
+                }
+            }
+        }
+        else if(choice == 3) // Worst Fit
+        {
+            for(j = 0; j < b; j++)
+            {
+                if(temp[j] >= process[i])
+                {
+                    if(index == -1 || temp[j] > temp[index])
+                        index = j;
+                }
+            }
+        }
+
+        if(index != -1)
+        {
+            printf("P%d\t%d\t%d\n", i + 1, process[i], index + 1);
+            temp[index] -= process[i];
+        }
+        else
+        {
+            printf("P%d\t%d\tNot Allocated\n", i + 1, process[i]);
+        }
+    }
+
+    return 0;
+}
