@@ -1,0 +1,92 @@
+NAME: ARCHANA.T
+REG.NO: 192521295
+COURSE CODE:CSA0406
+COURSE NAME:OPERATING SYSTEM
+CO3-AT1 EXPERIMENTS
+1.LOGICAL ADDRESS TO PHYSICAL ADDRESS USING BASE AND LIMIT REGISTWERS
+#include<stdio.h>
+int main()
+{
+    int b,l,la;
+    scanf("%d%d%d",&b,&l,&la);
+    if(la<l)
+        printf("Physical Address = %d",b+la);
+    else
+        printf("Invalid Address");
+    return 0;
+}
+OUTPUT:
+100
+50
+20
+Physical Address = 120
+2.PAGING MEMORY MANAGEMENT
+#include<stdio.h>
+int main()
+{
+    int pt[5]={5,8,1,3,6};
+    int p,o;
+    scanf("%d%d",&p,&o);
+    printf("Physical Address = %d",pt[p]*100+o);
+    return 0;
+}
+OUTPUT:
+2
+25
+Physical Address = 125
+3.PAGE TABLE SIMULATION
+#include<stdio.h>
+int main()
+{
+    int pt[3],i,p,o;
+    for(i=0;i<3;i++)
+        scanf("%d",&pt[i]);
+    scanf("%d%d",&p,&o);
+    printf("Frame = %d\n",pt[p]);
+    printf("Physical Address = %d",pt[p]*100+o);
+    return 0;
+}
+OUTPUT:
+5 2 7
+1
+30
+Frame = 2
+Physical Address = 230
+4.TRANSLATION LOOKASIDE BUFFER(TLB)
+#include<stdio.h>
+int main()
+{
+    float m,t,h;
+    scanf("%f%f%f",&m,&t,&h);
+    printf("Without TLB = %.0f\n",2*m);
+    printf("With TLB = %.0f",h*(t+m)+(1-h)*(t+2*m));
+    return 0;
+}
+OUTPUT:
+100
+20
+0.8
+Without TLB = 200
+With TLB = 140
+5.MEMORY PROTECTION
+#include<stdio.h>
+int main()
+{
+    int b,l,a;
+    scanf("%d%d%d",&b,&l,&a);
+    if(a<l)
+        printf("Access Allowed\nPhysical Address = %d",b+a);
+    else
+        printf("Access Denied");
+    return 0;
+}
+OUTPUT:
+100
+50
+30
+Access Allowed
+Physical Address = 130
+}
+
+
+      
