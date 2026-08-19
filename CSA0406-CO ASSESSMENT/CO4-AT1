@@ -1,0 +1,103 @@
+CO4-ASSESSMENT TOOL-1
+NAME: ARCHANA.T
+REG NO: 192521295
+COURSE CODE:CSA0406
+COURSE NAME: OPERATING SYSTEM
+1) #include <stdio.h>
+
+int main() {
+    int disk[100] = {0};
+    int n, size, method;
+    int i, j, count, start;
+
+    printf("Enter total disk blocks: ");
+    scanf("%d", &n);
+
+    printf("Enter file size: ");
+    scanf("%d", &size);
+
+    printf("1. Contiguous\n2. Linked\n3. Indexed\n");
+    printf("Enter method: ");
+    scanf("%d", &method);
+
+    if (method == 1) {
+        count = 0;
+        start = -1;
+
+        for (i = 0; i < n; i++) {
+            if (disk[i] == 0)
+                count++;
+            else
+                count = 0;
+
+            if (count == size) {
+                start = i - size + 1;
+                break;
+            }
+        }
+
+        if (start == -1)
+            printf("Contiguous allocation failed.\n");
+        else {
+            printf("Allocated blocks: ");
+            for (i = start; i < start + size; i++) {
+                disk[i] = 1;
+                printf("%d ", i);
+            }
+        }
+    }
+
+    else if (method == 2) {
+        count = 0;
+        printf("Allocated blocks: ");
+
+        for (i = 0; i < n && count < size; i++) {
+            if (disk[i] == 0) {
+                disk[i] = 1;
+                printf("%d ", i);
+                count++;
+            }
+        }
+
+        if (count < size)
+            printf("\nAllocation failed.");
+    }
+
+    else if (method == 3) {
+        int indexBlock = -1;
+
+        for (i = 0; i < n; i++) {
+            if (disk[i] == 0) {
+                indexBlock = i;
+                disk[i] = 1;
+                break;
+            }
+        }
+
+        if (indexBlock == -1) {
+            printf("Allocation failed.");
+            return 0;
+        }
+
+        printf("Index block: %d\n", indexBlock);
+        printf("Allocated blocks: ");
+
+        count = 0;
+        for (i = 0; i < n && count < size; i++) {
+            if (disk[i] == 0) {
+                disk[i] = 1;
+                printf("%d ", i);
+                count++;
+            }
+        }
+
+        if (count < size)
+            printf("\nAllocation failed.");
+    }
+
+    else
+        printf("Invalid method.");
+
+    return 0;
+}
+2)
