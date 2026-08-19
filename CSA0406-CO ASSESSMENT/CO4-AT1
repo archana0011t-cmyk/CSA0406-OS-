@@ -100,4 +100,476 @@ int main() {
 
     return 0;
 }
-2)
+2)#include <stdio.h>
+
+int main() {
+    int bitmap[100];
+    int n, request, deallocate;
+    int i, count = 0, block;
+
+    printf("Enter total disk blocks: ");
+    scanf("%d", &n);
+
+    printf("Enter bitmap (0=free, 1=allocated):\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &bitmap[i]);
+
+    printf("Enter number of blocks required: ");
+    scanf("%d", &request);
+
+    for (i = 0; i < n && count < request; i++) {
+        if (bitmap[i] == 0) {
+            bitmap[i] = 1;
+            count++;
+        }
+    }
+
+    if (count < request)
+        printf("Allocation failed. Not enough free blocks.\n");
+    else
+        printf("Allocation successful.\n");
+
+    printf("Bitmap after allocation:\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", bitmap[i]);
+
+    printf("\nEnter number of blocks to deallocate: ");
+    scanf("%d", &deallocate);
+
+    printf("Enter block numbers:\n");
+
+    for (i = 0; i < deallocate; i++) {
+        scanf("%d", &block);
+
+        if (block >= 0 && block < n && bitmap[block] == 1)
+            bitmap[block] = 0;
+        else
+            printf("Invalid block.\n");
+    }
+
+    printf("Bitmap after deallocation:\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", bitmap[i]);
+
+    return 0;
+}
+3)#include <stdio.h>
+#include <stdlib.h>
+
+void FCFS(int req[], int n, int head) {
+    int i, total = 0, current = head;
+
+    printf("\nFCFS: %d ", head);
+
+    for (i = 0; i < n; i++) {
+        total += abs(current - req[i]);
+        current = req[i];
+        printf("-> %d ", current);
+    }
+
+    printf("\nTotal Seek Time = %d\n", total);
+}
+
+void SSTF(int req[], int n, int head) {
+    int visited[100] = {0};
+    int i, j, min, index;
+    int total = 0, current = head;
+
+    printf("\nSSTF: %d ", head);
+
+    for (i = 0; i < n; i++) {
+        min = 9999;
+        index = -1;
+
+        for (j = 0; j < n; j++) {
+            if (!visited[j] &&
+                abs(current - req[j]) < min) {
+                min = abs(current - req[j]);
+                index = j;
+            }
+        }
+
+        visited[index] = 1;
+        total += min;
+        current = req[index];
+
+        printf("-> %d ", current);
+    }
+
+    printf("\nTotal Seek Time = %d\n", total);
+}
+
+void SCAN(int req[], int n, int head, int diskSize) {
+    int a[100], i, j, total = 0;
+    int current = head;
+
+    for (i = 0; i < n; i++)
+        a[i] = req[i];
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (a[i] > a[j]) {
+                int t = a[i];
+                a[i] = a[j];
+                a[j] = t;
+            }
+        }
+    }
+
+    printf("\nSCAN: %d ", head);
+
+    for (i = 0; i < n; i++) {
+        if (a[i] >= head) {
+            total += abs(current - a[i]);
+            current = a[i];
+            printf("-> %d ", current);
+        }
+    }
+
+    total += abs(current - (diskSize - 1));
+    current = diskSize - 1;
+    printf("-> %d ", current);
+
+    for (i = n - 1; i >= 0; i--) {
+        if (a[i] < head) {
+            total += abs(current - a[i]);
+            current = a[i];
+            printf("-> %d ", current);
+        }
+    }
+
+    printf("\nTotal Seek Time = %d\n", total);
+}
+
+int main() {
+    int req[100], n, head, diskSize;
+    int i;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request queue:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter disk size: ");
+    scanf("%d", &diskSize);
+
+    FCFS(req, n, head);
+    SSTF(req, n, head);
+    SCAN(req, n, head, diskSize);
+
+    return 0;
+}
+4)#include <stdio.h>
+#include <stdlib.h>
+
+void CSCAN(int req[], int n, int head, int size, char dir) {
+    int a[100], i, j, total = 0;
+    int current = head;
+
+    for (i = 0; i < n; i++)
+        a[i] = req[i];
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (a[i] > a[j]) {
+                int t = a[i];
+                a[i] = a[j];
+                a[j] = t;
+            }
+        }
+    }
+
+    printf("\nC-SCAN: %d ", head);
+
+    if (dir == 'R' || dir == 'r') {
+
+        for (i = 0; i < n; i++) {
+            if (a[i] >= head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+
+        total += abs(current - (size - 1));
+        current = size - 1;
+        printf("-> %d ", current);
+
+        total += size - 1;
+        current = 0;
+        printf("-> %d ", current);
+
+        for (i = 0; i < n; i++) {
+            if (a[i] < head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+    }
+
+    else {
+        for (i = n - 1; i >= 0; i--) {
+            if (a[i] <= head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+
+        total += current;
+        current = 0;
+        printf("-> %d ", current);
+
+        total += size - 1;
+        current = size - 1;
+        printf("-> %d ", current);
+
+        for (i = n - 1; i >= 0; i--) {
+            if (a[i] > head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+    }
+
+    printf("\nTotal Head Movement = %d\n", total);
+}
+
+void LOOK(int req[], int n, int head, char dir) {
+    int a[100], i, j, total = 0;
+    int current = head;
+
+    for (i = 0; i < n; i++)
+        a[i] = req[i];
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (a[i] > a[j]) {
+                int t = a[i];
+                a[i] = a[j];
+                a[j] = t;
+            }
+        }
+    }
+
+    printf("\nLOOK: %d ", head);
+
+    if (dir == 'R' || dir == 'r') {
+
+        for (i = 0; i < n; i++) {
+            if (a[i] >= head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+
+        for (i = n - 1; i >= 0; i--) {
+            if (a[i] < head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+    }
+
+    else {
+
+        for (i = n - 1; i >= 0; i--) {
+            if (a[i] <= head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+
+        for (i = 0; i < n; i++) {
+            if (a[i] > head) {
+                total += abs(current - a[i]);
+                current = a[i];
+                printf("-> %d ", current);
+            }
+        }
+    }
+
+    printf("\nTotal Head Movement = %d\n", total);
+}
+
+int main() {
+    int req[100], n, head, diskSize;
+    char direction;
+    int i;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request queue:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter disk size: ");
+    scanf("%d", &diskSize);
+
+    printf("Enter direction (L/R): ");
+    scanf(" %c", &direction);
+
+    CSCAN(req, n, head, diskSize, direction);
+    LOOK(req, n, head, direction);
+
+    return 0;
+}
+5)#include <stdio.h>
+#include <stdlib.h>
+
+int contiguous(int disk[], int n, int size, int blocks[]) {
+    int i, j, count;
+
+    for (i = 0; i <= n - size; i++) {
+        count = 0;
+
+        for (j = i; j < i + size; j++) {
+            if (disk[j] == 0)
+                count++;
+            else
+                break;
+        }
+
+        if (count == size) {
+            for (j = 0; j < size; j++) {
+                blocks[j] = i + j;
+                disk[i + j] = 1;
+            }
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int indexed(int disk[], int n, int size, int blocks[]) {
+    int i, count = 0;
+
+    for (i = 0; i < n; i++) {
+        if (disk[i] == 0) {
+            disk[i] = 1;
+            break;
+        }
+    }
+
+    if (i == n)
+        return 0;
+
+    for (i = 0; i < n && count < size; i++) {
+        if (disk[i] == 0) {
+            disk[i] = 1;
+            blocks[count++] = i;
+        }
+    }
+
+    return count == size;
+}
+
+int FCFS(int blocks[], int n, int head) {
+    int i, total = 0;
+
+    printf("FCFS: %d ", head);
+
+    for (i = 0; i < n; i++) {
+        total += abs(head - blocks[i]);
+        head = blocks[i];
+        printf("-> %d ", head);
+    }
+
+    return total;
+}
+
+int SSTF(int blocks[], int n, int head) {
+    int visited[100] = {0};
+    int i, j, min, index;
+    int total = 0;
+
+    printf("SSTF: %d ", head);
+
+    for (i = 0; i < n; i++) {
+        min = 9999;
+        index = -1;
+
+        for (j = 0; j < n; j++) {
+            if (!visited[j] &&
+                abs(head - blocks[j]) < min) {
+                min = abs(head - blocks[j]);
+                index = j;
+            }
+        }
+
+        visited[index] = 1;
+        total += min;
+        head = blocks[index];
+
+        printf("-> %d ", head);
+    }
+
+    return total;
+}
+
+int main() {
+    int disk[100] = {0};
+    int blocks[100];
+    int n, fileSize, head;
+    int allocation, scheduling;
+    int i, seek;
+
+    printf("Enter total disk blocks: ");
+    scanf("%d", &n);
+
+    printf("Enter file size: ");
+    scanf("%d", &fileSize);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("1. Contiguous\n");
+    printf("2. Indexed\n");
+    printf("Enter allocation method: ");
+    scanf("%d", &allocation);
+
+    printf("1. FCFS\n");
+    printf("2. SSTF\n");
+    printf("Enter scheduling method: ");
+    scanf("%d", &scheduling);
+
+    if (allocation == 1)
+        i = contiguous(disk, n, fileSize, blocks);
+    else
+        i = indexed(disk, n, fileSize, blocks);
+
+    if (!i) {
+        printf("File allocation failed.\n");
+        return 0;
+    }
+
+    printf("\nAllocated blocks: ");
+    for (i = 0; i < fileSize; i++)
+        printf("%d ", blocks[i]);
+
+    printf("\n\n");
+
+    if (scheduling == 1)
+        seek = FCFS(blocks, fileSize, head);
+    else
+        seek = SSTF(blocks, fileSize, head);
+
+    printf("\nTotal Seek Time = %d\n", seek);
+
+    return 0;
+}
