@@ -1,0 +1,35 @@
+CO5_ASSESSMENT TOOL 1
+NAME: ARCHANA.T
+REG NO: 192521295
+COURSE CODE: CSA0406
+COURSE NAME: OPERATING SYSTEM
+1)Optimized Linux File System Layout – 50 GB Server
+A server has 50 GB storage for system files, logs, user files, and application data. Since logs are growing rapidly, the disk must be divided properly to prevent logs from consuming the entire storage.
+A suitable layout is 10 GB for /, 12 GB for /var, 10 GB for /home, 8 GB for /opt, 4 GB for /tmp, 4 GB for swap, and 2 GB reserved space. The /var partition stores system logs and other frequently changing data.
+The log files should be managed using logrotate. It can rotate logs daily or weekly, compress old logs, and delete older files automatically. This ensures that log storage remains below the required 10 GB limit.
+Commands such as df -h and du -sh /var/log/* can be used to monitor disk usage. Alerts can also be configured when storage reaches 80–90%.
+This layout prevents logs from filling the root partition and provides emergency free space. Therefore, partitioning, log rotation, compression, and monitoring help maintain efficient disk utilization and continuous service availability.
+2) Kernel Optimization for High CPU Workloads
+A Linux system with high CPU workloads may suffer from frequent context switching, which reduces overall performance. Since hardware upgrades are not possible, kernel and scheduler-level optimization can be used.
+The Linux scheduler can be tuned by changing process priorities using nice and renice. For real-time applications, scheduling policies such as SCHED_FIFO or SCHED_RR can be used with the chrt command.
+CPU affinity can also be used to assign a process to specific CPU cores. The taskset command helps control CPU affinity and reduces unnecessary movement of processes between CPU cores.
+Kernel modules can be managed using commands such as lsmod, modprobe, and modprobe -r. Unnecessary modules can be removed carefully to reduce system overhead.
+Commands such as top, vmstat, and mpstat can be used to monitor CPU usage and context switching. These techniques improve CPU utilization and support real-time processing without hardware upgrades.
+3) Processing 1 Million Log Entries Using Shell Scripting
+Processing 1 million log entries per day requires an efficient shell script because the script must finish within 2 minutes. The main objective is to avoid slow processing methods.
+Commands such as grep, awk, sort, uniq, and wc are suitable for processing large log files. These commands can process many lines efficiently without using a separate shell operation for every line.
+grep can quickly search for specific patterns such as errors. awk can filter records and perform calculations, while wc can count the number of log entries.
+For example, grep -c "ERROR" application.log can count error messages, and awk can extract required fields from the log. sort and uniq can be used to identify duplicate or frequently occurring entries.
+The script should avoid unnecessary while read loops and repeated commands. Therefore, using efficient Linux text-processing commands and pipelines provides high performance and helps meet the two-minute requirement.
+4)Managing a Faulty Process Using Linux Tools
+A background process consuming 90% CPU can reduce the performance of other important services. The administrator should identify and control the process without restarting the system.
+The top command or ps aux --sort=-%cpu can be used to identify the process consuming the highest CPU. After finding its PID, the process can be monitored using top -p PID or ps.
+The process priority can be reduced using the renice command. For example, renice 10 -p PID gives the process a lower priority, allowing critical services to receive more CPU time.
+CPU affinity can also be controlled using taskset. If the process continues to cause serious problems, it can first be stopped using kill PID. The stronger kill -9 PID should only be used as a last resort.
+Finally, the administrator should verify critical services using systemctl status and monitor CPU usage again. This approach protects important services while solving the CPU problem without rebooting the system.
+5) Resource Allocation for 5 Virtual Machines
+The physical server has 16 GB RAM and must run five virtual machines. Each VM requires at least 2 GB, while the host operating system requires 4 GB.
+The five VMs require 5 × 2 GB = 10 GB. Adding the host requirement gives 10 + 4 = 14 GB. Therefore, 14 GB is required and 2 GB remains available as a buffer.
+The recommended allocation is 4 GB for the host OS and 2 GB for each of the five VMs. The remaining 2 GB should be kept as free or reserved memory to handle temporary increases in workload.
+Memory monitoring should be performed regularly to ensure that the host and VMs do not experience excessive memory pressure. Dynamic memory allocation can also be used if the virtualization platform supports it.
+This allocation allows all five VMs to operate smoothly under the given constraints. It also maintains sufficient memory for the host and provides a 2 GB safety buffer for better stability.
