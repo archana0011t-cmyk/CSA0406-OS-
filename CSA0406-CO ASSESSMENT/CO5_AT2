@@ -1,0 +1,74 @@
+CO5_ASSESSMENT TOOL 2
+NAME: ARCHANA.T
+REG NO: 192521295
+COURSE CODE: CSA0406
+COURSE NAME: OPERATING SYSTEM
+1.File System Space Management
+BEGIN
+STEP 1: Set disk limit = 80%
+STEP 2: Check current disk usage
+STEP 3: IF disk usage > 80% THEN
+STEP 4:     Find all log files
+STEP 5:     Sort log files by size
+STEP 6:     Select the largest log file
+STEP 7:     Delete or compress the file
+STEP 8:     Check disk usage again
+STEP 9:     IF disk usage <= 80% THEN
+STEP 10:        STOP
+STEP 11:      ENDIF
+STEP 12:    Repeat steps 6–10
+STEP 13: ENDIF
+STEP 14: END
+2.Priority-Based CPU Scheduling
+BEGIN
+STEP 1. Input the list of processes
+STEP 2. Sort processes by priority
+STEP 3. Select the highest-priority process
+STEP 4. Allocate CPU to the process
+STEP 5. Execute the process
+STEP 6. IF process is not completed THEN
+STEP 7.     Reduce its priority
+STEP 8.     Add it back to the process list
+STEP 9. ENDIF
+STEP 10. Repeat steps 3–9 until all processes are completed
+STEP 11. END
+3. RAM Allocation for Virtual Machines
+BEGIN
+STEP 1. Set total RAM = 16 GB
+STEP 2. Reserve 4 GB for the host system
+STEP 3. Calculate available RAM
+STEP 4. Input number of VMs
+STEP 5. Set minimum RAM = 2 GB
+STEP 6. Select a VM
+STEP 7. IF available RAM >= 2 GB THEN
+STEP 8.     Allocate 2 GB to the VM
+STEP 9.     Reduce available RAM by 2 GB
+STEP 10. ELSE
+STEP 11.     Display "Insufficient memory"
+STEP 12. ENDIF
+STEP 13. Repeat steps 6–12 for all VMs
+STEP 14. END
+4. Hypervisor Selection
+BEGIN
+STEP 1.Input performance requirement
+STEP 2. Input budget
+STEP 3. Input hardware access
+STEP 4. IF performance is HIGH AND hardware access is TRUE THEN
+STEP 5.     Select Type 1 Hypervisor
+STEP 6. ELSE IF budget is LOW THEN
+STEP 7.     Select Type 2 Hypervisor
+STEP 8. ELSE
+STEP 9.     Select Type 1 Hypervisor
+STEP 10. ENDIF
+STEP 11. Display selected hypervisor
+STEP 12.END
+5. CPU and Memory Resource Limiting
+BEGIN
+STEP 1. Input the list of applications
+STEP 2. Select an application
+STEP 3. Create a resource control group
+STEP 4. Set CPU limit
+STEP 5. Set memory limit
+STEP 6. Assign the application to the group
+STEP 7. Repeat steps 2–6 for all applications
+STEP 8. END
